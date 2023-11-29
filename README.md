@@ -1,4 +1,4 @@
-# AI Development Journey
+# AI Learning Journey
 A journey of a thousand commits begins with a single push. A collection of some artificial intelligence learning journey projects that I worked on during the AI boom era.
 
 ## Interface
