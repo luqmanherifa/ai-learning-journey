@@ -1,0 +1,3 @@
+1. install flask "pip install Flask"
+2. run app.py "python app.py"
+3. open link "http://127.0.0.1:5000"

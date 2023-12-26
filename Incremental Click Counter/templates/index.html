@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Aplikasi Hitung</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Skor: {{ skor }}</h1>
+        <a href="{{ url_for('tambah') }}" class="btn btn-primary">Tambah</a>
+        <a href="{{ url_for('kurangi') }}" class="btn btn-danger">Kurangi</a>
+    </div>
+</body>
+</html>
