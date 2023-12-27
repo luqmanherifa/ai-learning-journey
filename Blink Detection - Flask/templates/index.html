@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blink Detection</title>
+  </head>
+  <body>
+    <h1>Blink Detection using dlib</h1>
+    <img src="{{ url_for('video_feed') }}" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script>
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+
+      socket.on("blink_message", function (data) {
+        console.log(data.message);
+      });
+    </script>
+  </body>
+</html>
