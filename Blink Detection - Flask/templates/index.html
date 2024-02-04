@@ -16,7 +16,7 @@
         margin-top: 0;
       }
 
-      img {
+      .videofeed {
         position: fixed;
         top: 0;
         right: 0;
@@ -25,6 +25,19 @@
   </head>
   <body>
     <h1>Blink Detection using dlib</h1>
+
+    <h1>Manakah gambar kucing?</h1>
+    <h3>Senyum untuk memilih anjing. (Belum bisa)</h3>
+    <h3>Kedip untuk memilih kucing.</h3>
+
+    <button type="button" onclick="alert('Dog Image Clicked')">
+      <img src="{{ url_for('static', filename='dog.png') }}" alt="Dog Image" />
+    </button>
+
+    <button type="button" id="catButton" onclick="alert('Cat Image Clicked')">
+      <img src="{{ url_for('static', filename='cat.png') }}" alt="Cat Image" />
+    </button>
+
     <h1>1</h1>
     <h1>2</h1>
     <h1>3</h1>
@@ -56,7 +69,7 @@
     <h1>29</h1>
     <h1>30</h1>
 
-    <img src="{{ url_for('video_feed') }}" />
+    <img class="videofeed" src="{{ url_for('video_feed') }}" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
     <script>
@@ -66,7 +79,8 @@
 
       socket.on("blink_message", function (data) {
         console.log(data.message);
-        window.scrollBy(0, 50);
+        // window.scrollBy(0, 50);
+        document.getElementById("catButton").click();
       });
     </script>
   </body>
