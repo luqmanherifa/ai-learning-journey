@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blink Detection</title>
+    <style>
+      body {
+        height: 200vh;
+        margin: 0;
+        overflow-y: scroll;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      .videofeed {
+        position: fixed;
+        top: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Blink Detection using dlib</h1>
+
+    <h1>Manakah gambar kucing?</h1>
+    <h3>Senyum untuk memilih anjing. (Belum bisa)</h3>
+    <h3>Kedip untuk memilih kucing.</h3>
+
+    <button type="button" onclick="alert('Dog Image Clicked')">
+      <img src="{{ url_for('static', filename='dog.png') }}" alt="Dog Image" />
+    </button>
+
+    <button type="button" id="catButton" onclick="alert('Cat Image Clicked')">
+      <img src="{{ url_for('static', filename='cat.png') }}" alt="Cat Image" />
+    </button>
+
+    <h1>1</h1>
+    <h1>2</h1>
+    <h1>3</h1>
+    <h1>4</h1>
+    <h1>5</h1>
+    <h1>6</h1>
+    <h1>7</h1>
+    <h1>8</h1>
+    <h1>9</h1>
+    <h1>10</h1>
+    <h1>11</h1>
+    <h1>12</h1>
+    <h1>13</h1>
+    <h1>14</h1>
+    <h1>15</h1>
+    <h1>16</h1>
+    <h1>17</h1>
+    <h1>18</h1>
+    <h1>19</h1>
+    <h1>20</h1>
+    <h1>21</h1>
+    <h1>22</h1>
+    <h1>23</h1>
+    <h1>24</h1>
+    <h1>25</h1>
+    <h1>26</h1>
+    <h1>27</h1>
+    <h1>28</h1>
+    <h1>29</h1>
+    <h1>30</h1>
+
+    <img class="videofeed" src="{{ url_for('video_feed') }}" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script>
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+
+      socket.on("blink_message", function (data) {
+        console.log(data.message);
+        // window.scrollBy(0, 50);
+        document.getElementById("catButton").click();
+      });
+    </script>
+  </body>
+</html>
