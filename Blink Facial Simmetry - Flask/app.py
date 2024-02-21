@@ -46,6 +46,10 @@ def detect_blink(shape):
 
     return avg_ear
 
+def calculate_total_average_symmetry(eye_symmetry, nose_symmetry, smile_symmetry):
+    total_symmetry = (eye_symmetry + nose_symmetry + smile_symmetry) / 3
+    return total_symmetry
+
 def generate_frames():
     global cap, lock, blink_counter, blink_in_progress
 
@@ -73,6 +77,17 @@ def generate_frames():
 
                 # Deteksi mata, hidung, dan senyum menggunakan cascade classifier
                 eyes = eyeCascade.detectMultiScale(roi_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), maxSize=(100, 100))
+                total_eye_symmetry = sum([np.abs(ew - eh) for (_, _, ew, eh) in eyes]) / len(eyes) if len(eyes) > 0 else -1
+
+                noses = noseCascade.detectMultiScale(roi_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), maxSize=(100, 100))
+                total_nose_symmetry = sum([np.abs(nw - nh) for (_, _, nw, nh) in noses]) / len(noses) if len(noses) > 0 else -1
+
+                smiles = smileCascade.detectMultiScale(roi_gray, scaleFactor=1.8, minNeighbors=20, minSize=(25, 25))
+                total_smile_symmetry = sum([np.abs(sw - sh) for (_, _, sw, sh) in smiles]) / len(smiles) if len(smiles) > 0 else -1
+
+                total_avg_symmetry = calculate_total_average_symmetry(total_eye_symmetry, total_nose_symmetry, total_smile_symmetry)
+                cv2.putText(frame, f'Total Average Symmetry: {total_avg_symmetry:.2f}', (rect.left(), rect.top() - 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
                 for (ex, ey, ew, eh) in eyes:
                     cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
                     eye_symmetry = np.abs(ew - eh) if len(eyes) > 1 else -1
@@ -92,12 +107,10 @@ def generate_frames():
                         socketio.emit('blink_message', {'message': 'Blink detected! Total Blinks: {}'.format(blink_counter)})
                         print("Blink detected! Total Blinks:", blink_counter)
 
-                noses = noseCascade.detectMultiScale(roi_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), maxSize=(100, 100))
                 for (nx, ny, nw, nh) in noses:
                     cv2.rectangle(roi_color, (nx, ny), (nx + nw, ny + nh), (128, 0, 128), 2)
                     nose_symmetry = np.abs(nw - nh) if len(noses) > 0 else -1
                     cv2.putText(frame, f'Nose Symmetry: {nose_symmetry:.2f}', (rect.left(), rect.top() - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                smiles = smileCascade.detectMultiScale(roi_gray, scaleFactor=1.8, minNeighbors=20, minSize=(25, 25))
                 for (sx, sy, sw, sh) in smiles:
                     cv2.rectangle(roi_color, (sx, sy), (sx + sw, sy + sh), (0, 255, 255), 2)
                     smile_symmetry = np.abs(sw - sh) if len(smiles) > 0 else -1
